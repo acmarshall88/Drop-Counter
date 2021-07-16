@@ -38,10 +38,10 @@
 	protein_uM = 1; 
 
 	//droplet contact angle (in degrees... automatically converted to radians for volume calculations):	
-	theta = 60;
+	theta = 30;
 
 	//filepath to blank image:
-	blank_filepath = "\\\\uniwa.uwa.edu.au\\userhome\\staff7\\00101127\\My Documents\\LLPS results\\20210513_gfp-sfpq(1-265)\\10x\\BLANK_A11.nd2";
+	blank_filepath = "\\\\uniwa.uwa.edu.au\\userhome\\staff7\\00101127\\My Documents\\LLPS results\\20210618_sfpqQG\\20x\\D19_blank_30above.nd2";
 	
 	//pathway to blank images (NB: these images must have file names: "##uM_Gblur30.tif", where ## is an integer):
 //	blank_directory = "\\\\uniwa.uwa.edu.au\\userhome\\staff7\\00101127\\My Documents\\LLPS results\\20201112_gfp-sfpq(1-265)\\Day2_20hr (20201113)\\PlateI_centrifuged\\row I 10X OBJ\\BLANK(I1_Gblur)";
