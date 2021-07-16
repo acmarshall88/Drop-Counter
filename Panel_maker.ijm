@@ -164,7 +164,7 @@ print("### 3. Find slice with max mean background intensity... ###              
 ////////////////////////////////////////////////////////////////////////////////////////////
 
 Array.getStatistics(bg_mean_list, min, max, mean, stdDev);
-maxSlice = Array.findMaxima(bg_mean_list, max/2);
+maxSlice = Array.findMaxima(bg_mean_list, max/100, 0);
 
 maxSlice_bg_mean = bg_mean_list[maxSlice[0]];
 print("Slice with max bg intensity: "+(maxSlice[0]+1));
