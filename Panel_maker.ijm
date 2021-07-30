@@ -13,6 +13,34 @@ getPixelSize(unit, pixelWidth, pixelHeight);
 print("pixelWidth = "+pixelWidth+" "+unit);
 print("pixelHeight = "+pixelHeight+" "+unit);
 
+Dialog.create("Cropping and labelling...");
+Dialog.addCheckbox("Would you like to crop images?", false);
+Dialog.addNumber("Crop box width (square, centred)", 100, 1, 5, "microns");
+Dialog.addCheckbox("OR, draw crop box manually?", false);
+Dialog.addCheckbox("Include image labels?", false);
+Dialog.show();
+
+crop_status = Dialog.getCheckbox();
+crop_size = Dialog.getNumber()/pixelWidth;
+crop_manual_status = Dialog.getCheckbox();
+label_status = Dialog.getCheckbox();
+
+if (crop_status == true) {
+
+	getDimensions(width, height, channels, slices, frames);
+		image_width = width;
+		image_height = height;
+	
+	if (crop_manual_status == true) {
+		waitForUser("Draw box to crop image. Then hit 'OK'.");
+		run("Crop");
+	} else {
+		makeRectangle(image_width/2 - crop_size/2, image_height/2 - crop_size/2, crop_size, crop_size);
+		run("Crop");
+	}
+
+}
+
 
 // Assigns 'sample' to open (selected) image:
 sample = getTitle();
@@ -193,7 +221,12 @@ print("### 5. Make Montage... ###");
 ////////////////////////////////////////////////////////////////////////////////////////////
 
 print("Number of panels = "+nSlices);
-run("Make Montage...", "columns="+nSlices+" rows=1 scale=0.25");
+
+if (label_status == true) {
+	run("Make Montage...", "columns="+nSlices+" rows=1 scale=0.25 font=14 label");
+} else {
+	run("Make Montage...", "columns="+nSlices+" rows=1 scale=0.25");
+}
 
 run("Scale Bar...", "width=200 height=20 font=40 color=Red background=None location=[Lower Right] bold overlay");
 run("Grays");
