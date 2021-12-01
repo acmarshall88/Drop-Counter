@@ -13,6 +13,9 @@ getPixelSize(unit, pixelWidth, pixelHeight);
 print("pixelWidth = "+pixelWidth+" "+unit);
 print("pixelHeight = "+pixelHeight+" "+unit);
 
+// Ensures scale bar is set to 'overlay':
+run("Scale Bar...", "width=0 height=0 font=0 color=White background=None location=[Lower Right] hide overlay");
+
 Dialog.create("Cropping and labelling...");
 Dialog.addCheckbox("Would you like to crop images?", false);
 Dialog.addNumber("Crop box width (square, centred)", 100, 1, 5, "microns");
@@ -234,8 +237,8 @@ run("Grays");
 getStatistics(area, mean, min, max, std, histogram);
 print("min intensity = "+min);
 print("max intensity = "+max);
-setMinAndMax(min, min+(max-min)*0.4);
-print("min <-> max set to: "+min+" <-> "+(min+(max-min)*0.4));
+setMinAndMax(min, max);
+print("min <-> max set to: "+min+" <-> "+max);
 
 print(" ");
 ////////////////////////////////////////////////////////////////////////////////////////////
