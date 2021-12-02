@@ -21,12 +21,14 @@ Dialog.addCheckbox("Would you like to crop images?", false);
 Dialog.addNumber("Crop box width (square, centred)", 100, 1, 5, "microns");
 Dialog.addCheckbox("OR, draw crop box manually?", false);
 Dialog.addCheckbox("Include image labels?", false);
+Dialog.addCheckbox("Normalise brightness?", true);
 Dialog.show();
 
 crop_status = Dialog.getCheckbox();
 crop_size = Dialog.getNumber()/pixelWidth;
 crop_manual_status = Dialog.getCheckbox();
 label_status = Dialog.getCheckbox();
+normalisation_status = Dialog.getCheckbox();
 
 if (crop_status == true) {
 
@@ -48,6 +50,7 @@ if (crop_status == true) {
 // Assigns 'sample' to open (selected) image:
 sample = getTitle();
 
+if (normalisation_status == true) {
 
 for (i = 1; i <= nSlices; i++) {
     setSlice(i);
@@ -217,6 +220,10 @@ for (i = 1; i <= nSlices; i++) {
 	run("Multiply...", "value="+normalisation_factor+" slice");
 };
 print(" ");
+
+} else {
+	print("No image brightness normalisation");
+};
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 print("###########################################################################");
