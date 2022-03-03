@@ -41,7 +41,7 @@
 	theta = 30;
 
 	//filepath to blank image:
-	blank_filepath = "\\\\uniwa.uwa.edu.au\\userhome\\staff7\\00101127\\My Documents\\LLPS results\\20210618_sfpqQG\\20x\\D19_blank_30above.nd2";
+	blank_filepath = "\\\\uniwa.uwa.edu.au\\userhome\\staff7\\00101127\\My Documents\\LLPS results\\20220215_ECsfpqWT\\after_16hrs\\10xGFP\\BLANK_M2_Gblur80.tif";
 	
 	//pathway to blank images (NB: these images must have file names: "##uM_Gblur30.tif", where ## is an integer):
 //	blank_directory = "\\\\uniwa.uwa.edu.au\\userhome\\staff7\\00101127\\My Documents\\LLPS results\\20201112_gfp-sfpq(1-265)\\Day2_20hr (20201113)\\PlateI_centrifuged\\row I 10X OBJ\\BLANK(I1_Gblur)";
@@ -68,7 +68,7 @@ Dialog.addNumber("(2) Droplet Contact Angle:", theta, 1, 5, "deg");
 Dialog.addNumber("(3) Droplet thresholding:  ", user_value);
 //Dialog.addMessage("^ Number of positive standard deviations from mean of background peak of \n blank-subtracted image ('user value' - Wang et al, 'A Molecular Grammar...', Cell, 2018).\n Increasing this will increase intensity threshold for defining pixels as condensed phase. \n (use ~3 for widefield images; ~5-10 for confocal)");
 
-Dialog.addCheckbox("(4) Subtract Blank?", true);
+Dialog.addCheckbox("(4) Subtract Blank?", false);
 //Dialog.addMessage("^ Useful when background intensity is non-uniform. \n \n \n");
 
 Dialog.addString("(5) Blank Filepath:     ", blank_filepath, 100);
