@@ -4,7 +4,7 @@
 
 waitForUser("Import Image Sequence \n (File->Import->Image Sequence...)");
 
-run("Images to Stack", "name=Stack title=[] use");
+run("Images to Stack", "name=Stack title=[] use keep");
 
 Stack.setXUnit("microns");
 Stack.setYUnit("microns");
