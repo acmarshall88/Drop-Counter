@@ -41,7 +41,7 @@
 	theta = 30;
 
 	//filepath to blank image:
-	blank_filepath = "\\\\uniwa.uwa.edu.au\\userhome\\staff7\\00101127\\My Documents\\LLPS results\\20220215_ECsfpqWT\\after_16hrs\\10xGFP\\BLANK_M2_Gblur80.tif";
+	blank_filepath = "\\\\uniwa.uwa.edu.au\\userhome\\staff7\\00101127\\My Documents\\LLPS results\\20220629_ECsfpq276-707cleaved\\20220630_surface_20x_GFP\\Gblur50_G05.tif";
 	
 	//pathway to blank images (NB: these images must have file names: "##uM_Gblur30.tif", where ## is an integer):
 //	blank_directory = "\\\\uniwa.uwa.edu.au\\userhome\\staff7\\00101127\\My Documents\\LLPS results\\20201112_gfp-sfpq(1-265)\\Day2_20hr (20201113)\\PlateI_centrifuged\\row I 10X OBJ\\BLANK(I1_Gblur)";
