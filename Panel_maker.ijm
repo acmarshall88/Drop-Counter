@@ -22,6 +22,9 @@ Dialog.addNumber("Crop box width (square, centred)", 100, 1, 5, "microns");
 Dialog.addCheckbox("OR, draw crop box manually?", false);
 Dialog.addCheckbox("Include image labels?", false);
 Dialog.addCheckbox("Normalise brightness?", true);
+Dialog.addNumber("Scale panels", 1, 2, 5, "");
+Dialog.addNumber("Border width", 8, 0, 5, "px");
+Dialog.addCheckbox("Convert to 8-bit?", true);
 Dialog.show();
 
 crop_status = Dialog.getCheckbox();
@@ -29,6 +32,9 @@ crop_size = Dialog.getNumber()/pixelWidth;
 crop_manual_status = Dialog.getCheckbox();
 label_status = Dialog.getCheckbox();
 normalisation_status = Dialog.getCheckbox();
+scale = Dialog.getNumber();
+border_width = Dialog.getNumber();
+convert_to_8bit = Dialog.getCheckbox();
 
 if (crop_status == true) {
 
@@ -37,6 +43,7 @@ if (crop_status == true) {
 		image_height = height;
 	
 	if (crop_manual_status == true) {
+		makeRectangle(400, 400, 826, 826);
 		waitForUser("Draw box to crop image. Then hit 'OK'.");
 		run("Crop");
 	} else {
@@ -233,9 +240,9 @@ print("### 5. Make Montage... ###");
 print("Number of panels = "+nSlices);
 
 if (label_status == true) {
-	run("Make Montage...", "columns="+nSlices+" rows=1 scale=0.25 font=14 label");
+	run("Make Montage...", "columns="+nSlices+" rows=1 scale="+scale+" border="+border_width+" font=14 label");
 } else {
-	run("Make Montage...", "columns="+nSlices+" rows=1 scale=0.25");
+	run("Make Montage...", "columns="+nSlices+" rows=1 scale="+scale+" border="+border_width+"");
 }
 
 run("Scale Bar...", "width=200 height=20 font=40 color=Red background=None location=[Lower Right] bold overlay");
@@ -246,6 +253,10 @@ print("min intensity = "+min);
 print("max intensity = "+max);
 setMinAndMax(min, max);
 print("min <-> max set to: "+min+" <-> "+max);
+
+if (convert_to_8bit == true) {
+	run("8-bit");
+}
 
 print(" ");
 ////////////////////////////////////////////////////////////////////////////////////////////
