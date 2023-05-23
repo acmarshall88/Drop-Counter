@@ -25,6 +25,7 @@ Dialog.addCheckbox("Normalise brightness?", true);
 Dialog.addNumber("Scale panels", 1, 2, 5, "");
 Dialog.addNumber("Border width", 8, 0, 5, "px");
 Dialog.addCheckbox("Convert to 8-bit?", true);
+Dialog.addCheckbox("Reverse order of images?", false);
 Dialog.show();
 
 crop_status = Dialog.getCheckbox();
@@ -35,6 +36,11 @@ normalisation_status = Dialog.getCheckbox();
 scale = Dialog.getNumber();
 border_width = Dialog.getNumber();
 convert_to_8bit = Dialog.getCheckbox();
+reverse_order = Dialog.getCheckbox();
+
+if (reverse_order == true) {
+	run("Reverse");
+}
 
 if (crop_status == true) {
 
