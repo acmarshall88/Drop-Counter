@@ -38,7 +38,7 @@
 	protein_uM = 1; 
 
 	//droplet contact angle (in degrees... automatically converted to radians for volume calculations):	
-	theta = 30;
+	theta = 180;
 
 	//filepath to blank image:
 	blank_filepath = "\\\\uniwa.uwa.edu.au\\userhome\\staff7\\00101127\\My Documents\\LLPS results\\20220629_ECsfpq276-707cleaved\\20220630_surface_20x_GFP\\Gblur50_G05.tif";
@@ -50,7 +50,7 @@
 //	blank_file_prefix = "Gblur100_";
 	
 	//droplet threshold value (number of background peak standard deviations) ("user value", Wang et al 2018):
-	user_value = 3;
+	user_value = 10;
 		//(Increasing user_value will increase intensity threshold for defining pixels as condensed phase)
 	
 	//'tolerance' for finding maxima in background peak of raw sample image (see 'Array.findMaxima()', LINE 102):
@@ -630,24 +630,36 @@ run("Analyze Particles...", "size=0-Infinity circularity=0.00-1.00 display summa
 
 //Calculate volume of each droplet using Area (A) and Contact Angle (theta)
 //and add to Results table...
+	// - if contact angle is < 90 deg, then calculate volume of spherical cap, where A will be the 
+	//    droplet 'footprint' (i.e. base of cap);
+	// - if contact angle is >= 90 deg, then calculate volume of spherical cap, where A will be the
+	//    slice with the largest cross-sectional area (i.e. circle with radius == radius of sphere).
 
-//theta must be in RADIANS:
-th_rad = theta*(PI/180);
+th_rad = theta*(PI/180); //(theta must be in RADIANS)
 
-for (i = 0; i < nResults(); i++) {
-    A = getResult("Area", i);
-    setResult("Volume_um3", i, (PI/3) * pow((sqrt(A/PI)/sin(th_rad)), 3) * (2+cos(th_rad)) * pow((1-cos(th_rad)), 2) );
-}
-updateResults();
+if (theta < 90) {
+		
+	for (i = 0; i < nResults(); i++) {
+	    A = getResult("Area", i);
+	    setResult("Volume_um3", i, (PI/3) * pow((sqrt(A/PI)/sin(th_rad)), 3) * (2+cos(th_rad)) * pow((1-cos(th_rad)), 2) );
+	}
+	updateResults();
 
+} else {
+		
+	for (i = 0; i < nResults(); i++) {
+	    A = getResult("Area", i);
+	    setResult("Volume_um3", i, (A/3) * sqrt(A/PI) * (2+cos(th_rad)) * pow((1-cos(th_rad)), 2) );
+	}
+	updateResults();
+}	
+
+//Sum all droplet volumes to give total condensed vol in image:
 selectWindow("Results");
 Vol_array = Table.getColumn("Volume_um3");
-
-Vol_total_um3=0;
-
-for (i=0;i<lengthOf(Vol_array);i++){
- Vol_total_um3=Vol_total_um3+Vol_array[i];
-};
+Array.getStatistics(Vol_array, min, max, mean);
+ndrops = lengthOf(Vol_array);
+Vol_total_um3 = mean * ndrops;
 
 print("Condensed vol in image (um^3) = "+Vol_total_um3);
 
@@ -696,9 +708,9 @@ Total_calculated_Vol_nL=Vol_total_um3/pow(10,6);
 	//(^ 1 nanoliter = 1,000,000 cubic microns)
 print("Condensed vol in image (nL) = "+Total_calculated_Vol_nL);
 
-// Interior dimensions of well bottom are ~ 3.3 x 3.3 mm.
-print("Well bottom dimensions ~ 3.3 x 3.3 mm");
-well_area_um2 = pow(3300,2);
+// Interior dimensions of well bottom are 3.26 x 3.26 mm.
+print("Well bottom dimensions ~ 3.26 x 3.26 mm");
+well_area_um2 = pow(3260,2);
 print("Well bottom area = "+well_area_um2+" microns^2");
 
 // Calculates area covered by image...
